@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block head %}
+    <title>Купи Топ!</title>
+    <link rel="stylesheet" href="{% static 'css/index.css'%}">
+{% endblock %}
+
+{% block body %}
+    <div class="row w-100">
+        <div class="col-12 col-md-4 col-lg-3 col-xl-2 sticky-top">
+            <div id="list-example" class="list-group sticky-top">
+                <a class="list-group-item list-group-item-action bg-success border-success" href="#list-item-1">Скидки</a>
+                <a class="list-group-item list-group-item-action bg-dark border-dark text-light" href="#list-item-2">Основная часть</a>
+                <a class="list-group-item list-group-item-action bg-info border-info" href="#list-item-3">Контакты</a>
+            </div>
+        </div>
+        <div class="col-12 col-md-8 col-lg-9 col-xl-10">
+            <div data-bs-spy="scroll" data-bs-target="#list-example" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+                <h4 id="list-item-1" style="margin-left:12%;">Скидки</h4>
+                    {% if discount %}
+                    <div id="carouselExampleControls" class="carousel slide w-50" data-bs-ride="carousel" style="margin-left: 25%;">
+                        <div class="carousel-inner">
+                            <div class="carousel-item active">
+                                <a href='#'><img src="{{ discount_product.photo.url }}" class="d-block w-100" alt="..."></a>
+                            </div>
+                            {% for product in discount_products %}
+                                <div class="carousel-item">
+                                    <a href='#'><img src="{{ product.photo.url }}" class="d-block w-100" alt="..."></a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                  </div>
+                  {% else %}
+                  <span class="display-3">Пока-что скидок нет</span>
+                  {% endif %}
+                <h4 id="list-item-2" style="margin-left:12%;">Основная часть</h4>
+                    <div class="row">
+                        {% for product in products %}
+                        <div class="card col-12 col-sm-6 col-lg-4 crd">
+                            <img src="{{ product.photo.url }}" class="card-img-top crdimg" alt="...">
+                            <div class="card-body">
+                            <h5 class="card-title">{{ product.title }}</h5>
+                            <p class="card-text">{{ product.short_disc }}</p>
+                            <button class="btn btn-primary bg-success border-success" data-bs-toggle="modal" data-bs-target="#exampleModal{{ product.id }}">Цена</button>
+                            <div class="modal fade" id="exampleModal{{ product.id }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                  <div class="modal-content">
+                                    <div class="modal-header">
+                                      <h5 class="modal-title" id="exampleModalLabel">{{ product.title }}</h5>
+                                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        Стоимость: {% if product.discount %} <s>{{ product.price }}</s>  {{ product.discount_price }} рублей. 
+                                        {% else %} {{ product.price }} рублей. {% endif %}Чтобы приобрести какой-либо товар, обратитесь по номеру: +7(929) 269-19-61
+                                    </div>
+                                    <div class="modal-footer">
+                                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                                      <button type="button" class="btn btn-primary">OK</button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                <h4 id="list-item-3" style="margin-left:12%;">Контакты</h4>
+                <div class="card">
+                    <ul class="list-group list-group-flush">
+                      <li class="list-group-item">Имя: Богдан Олегович</li>
+                      <li class="list-group-item">Номер телефона: +7(929) 269-19-61</li>
+                    </ul>
+                  </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

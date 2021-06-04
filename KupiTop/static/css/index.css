@@ -1,0 +1,15 @@
+.crd {
+    margin-top: 20px;
+    transition: all 0.2s;
+}
+.crd:hover {
+    border-radius: 30px;
+    transition: all 0.2s;
+}
+.crd:hover .crdimg {
+    border-radius: 30px;
+    transition: all 0.2s;
+}
+.crd .crdimg {
+    transition: all 0.2s;
+}
